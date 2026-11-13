@@ -1,0 +1,10 @@
+{% extends 'base.html' %}
+{% block content %}
+  <h1>Обучения</h1>
+  <p>Назначения курсов сотрудникам и статус их прохождения.</p>
+  <div class="actions">
+    <a class="btn{% if not active %} btn-primary{% endif %}" href="{% url 'trainings:trainings' %}">Все обучения</a>
+    <a class="btn{% if active %} btn-primary{% endif %}" href="{% url 'trainings:trainings' %}?status=active">Только активные</a>
+  </div>
+  {% include 'trainings/includes/table.html' with trainings=trainings only %}
+{% endblock %}

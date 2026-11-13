@@ -1,0 +1,21 @@
+{% extends 'base.html' %}
+{% block content %}
+  <h1>Сотрудники</h1>
+  <p>Реестр сотрудников компании и их учебных назначений. Всего: {{ employees|length }}.</p>
+  <div class="table-responsive">
+    <table class="table">
+      <thead><tr><th scope="col">ФИО</th><th scope="col">Должность</th><th scope="col">Рабочая почта</th></tr></thead>
+      <tbody>
+        {% for employee in employees %}
+          <tr>
+            <td><a href="{% url 'employees:employee_detail' employee.id %}">{{ employee.name }}</a></td>
+            <td>{{ employee.position|default:"Не указана" }}</td>
+            <td>{{ employee.email }}</td>
+          </tr>
+        {% empty %}
+          <tr><td colspan="3">Сотрудники пока не добавлены.</td></tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+{% endblock %}

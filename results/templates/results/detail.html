@@ -1,0 +1,13 @@
+{% extends 'base.html' %}
+{% block content %}
+  <h1>Результат №{{ result.id }}</h1>
+  <div class="card card-body">
+    <p><strong>Сотрудник:</strong> <a href="{% url 'employees:employee_detail' training.user.id %}">{{ training.user.name }}</a></p>
+    <p><strong>Курс:</strong> <a href="{% url 'courses:course_detail' training.course.id %}">{{ training.course.name }}</a></p>
+    <p><strong>Основание:</strong> <a href="{% url 'trainings:training_detail' training.id %}">Обучение №{{ training.id }}</a></p>
+    <p><strong>Оценка:</strong> {{ result.score }} / 100 баллов</p>
+    <p><strong>Дата результата:</strong> {{ result.completed_date }}</p>
+    <div class="description">{{ result.comment|default:"Комментарий не указан."|linebreaksbr }}</div>
+  </div>
+  <a class="btn" href="{% url 'results:results' %}">К результатам</a>
+{% endblock %}

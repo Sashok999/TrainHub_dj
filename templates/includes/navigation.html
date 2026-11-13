@@ -1,0 +1,13 @@
+{% with current=request.resolver_match.view_name %}
+  <nav class="nav" aria-label="Основная навигация">
+    <a class="nav-link" href="{% url 'homepage:index' %}"{% if current == 'homepage:index' %} aria-current="page"{% endif %}>Главная</a>
+    <a class="nav-link" href="{% url 'employees:employees' %}"{% if request.resolver_match.app_name == 'employees' %} aria-current="page"{% endif %}>Сотрудники</a>
+    <a class="nav-link" href="{% url 'courses:courses' %}"{% if current == 'courses:courses' or current == 'courses:course_detail' %} aria-current="page"{% endif %}>Курсы</a>
+    <a class="nav-link" href="{% url 'trainings:trainings' %}"{% if request.resolver_match.app_name == 'trainings' %} aria-current="page"{% endif %}>Обучения</a>
+    <a class="nav-link" href="{% url 'results:results' %}"{% if request.resolver_match.app_name == 'results' %} aria-current="page"{% endif %}>Результаты</a>
+    <a class="nav-link" href="{% url 'courses:available' %}"{% if current == 'courses:available' %} aria-current="page"{% endif %}>Доступные курсы</a>
+    {% if sql_enabled %}
+      <a class="nav-link" href="{% url 'homepage:statistics' %}"{% if current == 'homepage:statistics' %} aria-current="page"{% endif %}>Статистика</a>
+    {% endif %}
+  </nav>
+{% endwith %}

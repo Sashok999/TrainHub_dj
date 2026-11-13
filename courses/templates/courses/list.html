@@ -1,0 +1,19 @@
+{% extends 'base.html' %}
+{% block content %}
+  <h1>Курсы</h1>
+  <p>Учебные программы и обязательные инструктажи компании. Найдено: {{ courses|length }}.</p>
+  <div class="actions">
+    <a class="btn{% if not mandatory %} btn-primary{% endif %}" href="{% url 'courses:courses' %}">Все курсы</a>
+    <a class="btn{% if mandatory %} btn-primary{% endif %}" href="{% url 'courses:courses' %}?mandatory=1">Обязательные</a>
+    <a class="btn" href="{% url 'courses:available' %}">Доступные для назначения</a>
+  </div>
+  <div class="course-grid">
+    {% for course in courses %}
+      {% include 'courses/includes/card.html' with course=course only %}
+    {% empty %}
+      <p>Каталог курсов пока пуст.</p>
+    {% endfor %}
+  </div>
+{% endblock %}
+
+

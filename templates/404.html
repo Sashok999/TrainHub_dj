@@ -1,0 +1,6 @@
+{% extends 'base.html' %}
+{% block content %}
+  <h1 class="text-danger">{{ title|default:"404 - страница не найдена" }}</h1>
+  <p>Запись с указанным идентификатором отсутствует или адрес неверен.</p>
+  <a class="btn" href="{% url back_route|default:'homepage:index' %}">{{ back_text|default:"На главную" }}</a>
+{% endblock %}

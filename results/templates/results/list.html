@@ -1,0 +1,22 @@
+{% extends 'base.html' %}
+{% block content %}
+  <h1>Результаты</h1>
+  <p>Итоговые оценки по завершенному обучению сотрудников.</p>
+  <div class="table-responsive">
+    <table class="table">
+      <thead><tr><th scope="col">Номер</th><th scope="col">Сотрудник</th><th scope="col">Курс</th><th scope="col">Баллы</th><th scope="col">Дата результата</th></tr></thead>
+      <tbody>
+        {% for result in results %}
+          <tr>
+            <td><a href="{% url 'results:result_detail' result.id %}">№{{ result.id }}</a></td>
+            <td><a href="{% url 'employees:employee_detail' result.enrollment.user.id %}">{{ result.enrollment.user.name }}</a></td>
+            <td><a href="{% url 'courses:course_detail' result.enrollment.course.id %}">{{ result.enrollment.course.name }}</a></td>
+            <td>{{ result.score }} / 100</td><td>{{ result.completed_date }}</td>
+          </tr>
+        {% empty %}
+          <tr><td colspan="5">Результаты пока не зафиксированы.</td></tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+{% endblock %}

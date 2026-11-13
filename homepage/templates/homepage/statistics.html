@@ -1,0 +1,56 @@
+{% extends 'base.html' %}
+{% block content %}
+  <h1>Статистика обучения</h1>
+  <div class="metrics">
+    <div class="card metric"><strong>{{ totals.total }}</strong>Всего обучений</div>
+    <div class="card metric"><strong>{{ totals.active }}</strong>Активных</div>
+    <div class="card metric"><strong>{{ totals.completed }}</strong>Завершенных</div>
+    <div class="card metric"><strong>{{ totals.cancelled }}</strong>Отмененных</div>
+  </div>
+  <section class="card card-body">
+    <h2>Результаты обучения</h2>
+    {% if summary.total %}
+      <p>Зафиксировано оценок: {{ summary.total }}. Средний балл: <strong>{{ summary.average_score|floatformat:1 }}</strong> / 100.</p>
+      <p>Минимальный балл: {{ summary.minimum_score }}. Максимальный балл: {{ summary.maximum_score }}.</p>
+    {% else %}
+      <p>Результатов пока нет. Средний балл не рассчитан.</p>
+    {% endif %}
+    <p>Доля завершений считается среди неотмененных назначений. Порог сдачи по баллам в проекте не установлен.</p>
+  </section>
+  <h2>По курсам</h2>
+  <div class="table-responsive">
+    <table class="table">
+      <thead><tr><th scope="col">Курс</th><th scope="col">Назначено</th><th scope="col">Завершено</th><th scope="col">Доля завершений</th></tr></thead>
+      <tbody>
+        {% for row in course_statistics %}
+          <tr>
+            <td><a href="{% url 'courses:course_detail' row.id %}">{{ row.name }}</a></td>
+            <td>{{ row.training_count }}</td><td>{{ row.completed_count }}</td>
+            <td>{% if row.training_count %}{{ row.completion_rate|floatformat:1 }} %{% else %}Нет назначений{% endif %}</td>
+          </tr>
+        {% empty %}<tr><td colspan="4">Курсов пока нет.</td></tr>{% endfor %}
+      </tbody>
+    </table>
+  </div>
+  <h2>По сотрудникам</h2>
+  <div class="table-responsive">
+    <table class="table">
+      <thead><tr><th scope="col">Сотрудник</th><th scope="col">Оценок</th><th scope="col">Средний балл</th></tr></thead>
+      <tbody>
+        {% for row in employee_statistics %}
+          <tr>
+            <td><a href="{% url 'employees:employee_detail' row.id %}">{{ row.name }}</a></td>
+            <td>{{ row.result_count }}</td>
+            <td>{% if row.result_count %}{{ row.average_score|floatformat:1 }}{% else %}Нет оценок{% endif %}</td>
+          </tr>
+        {% empty %}<tr><td colspan="3">Сотрудников пока нет.</td></tr>{% endfor %}
+      </tbody>
+    </table>
+  </div>
+  <h2>Курсы с назначениями</h2>
+  <ul>
+    {% for row in popular_courses %}
+      <li><a href="{% url 'courses:course_detail' row.id %}">{{ row.name }}</a>: {{ row.training_count }}</li>
+    {% empty %}<li>Неотмененных назначений пока нет.</li>{% endfor %}
+  </ul>
+{% endblock %}

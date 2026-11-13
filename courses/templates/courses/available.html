@@ -1,0 +1,33 @@
+{% extends 'base.html' %}
+{% block content %}
+  <h1>Доступные курсы</h1>
+  <p>Выберите сотрудника и дату назначения. Назначенный на эту дату неотмененный курс исключается из списка.</p>
+  <form method="get" action="{% url 'courses:available' %}" class="card card-body search-form">
+    <div>
+      <label for="employee">Сотрудник</label>
+      <select id="employee" name="employee" required>
+        <option value="">Выберите сотрудника</option>
+        {% for person in employees %}
+          <option value="{{ person.id }}"{% if person.id|stringformat:'s' == employee_id %} selected{% endif %}>{{ person.name }}</option>
+        {% endfor %}
+      </select>
+    </div>
+    <div>
+      <label for="date">Дата назначения</label>
+      <input id="date" name="date" type="date" value="{{ selected_date }}" required>
+    </div>
+    <button class="btn btn-primary" type="submit">Найти курсы</button>
+  </form>
+  {% if error %}<p role="alert" class="text-danger">{{ error }}</p>{% endif %}
+  {% if employee and not error %}
+    <h2>{{ employee.name }} · {{ selected_date }}</h2>
+    <p>Доступно курсов: {{ courses|length }}.</p>
+    <div class="course-grid">
+      {% for course in courses %}
+        {% include 'courses/includes/card.html' with course=course only %}
+      {% empty %}
+        <p>На выбранную дату доступных курсов нет.</p>
+      {% endfor %}
+    </div>
+  {% endif %}
+{% endblock %}

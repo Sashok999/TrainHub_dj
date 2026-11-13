@@ -1,0 +1,17 @@
+{% extends 'base.html' %}
+{% block content %}
+  <h1>Обучение №{{ training.id }}</h1>
+  <div class="card card-body">
+    <p><strong>Сотрудник:</strong> <a href="{% url 'employees:employee_detail' training.user.id %}">{{ training.user.name }}</a></p>
+    <p><strong>Курс:</strong> <a href="{% url 'courses:course_detail' training.course.id %}">{{ training.course.name }}</a></p>
+    <p><strong>Дата назначения:</strong> {{ training.enrollment_date }}</p>
+    <p><strong>Статус:</strong> {% include 'trainings/includes/status.html' with training=training only %}</p>
+    <h2>Результаты</h2>
+    {% for result in results %}
+      <p><a href="{% url 'results:result_detail' result.id %}">Результат №{{ result.id }}: {{ result.score }} / 100</a></p>
+    {% empty %}
+      <p>Результат еще не зафиксирован.</p>
+    {% endfor %}
+  </div>
+  <a class="btn" href="{% url 'trainings:trainings' %}">К обучениям</a>
+{% endblock %}

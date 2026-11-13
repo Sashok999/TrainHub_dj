@@ -1,0 +1,7 @@
+{% if training.is_cancelled %}
+  <span class="badge bg-secondary">{{ training.status }}</span>
+{% elif training.is_completed %}
+  <span class="badge bg-success">{{ training.status }}</span>
+{% else %}
+  <span class="badge bg-primary">{{ training.status }}</span>
+{% endif %}

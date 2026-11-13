@@ -1,0 +1,13 @@
+{% extends 'base.html' %}
+{% block content %}
+  <h1>{{ employee.name }}</h1>
+  <div class="card card-body">
+    <p><strong>ID:</strong> {{ employee.id }}</p>
+    <p><strong>Должность:</strong> {{ employee.position }}</p>
+    <p><strong>Почта:</strong> {{ employee.email }}</p>
+    <p><strong>Роль:</strong> {{ employee.role }}</p>
+  </div>
+  <h2>Назначенное обучение</h2>
+  {% include 'trainings/includes/table.html' with trainings=trainings only %}
+  <a class="btn" href="{% url 'employees:employees' %}">К сотрудникам</a>
+{% endblock %}

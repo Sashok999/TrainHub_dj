@@ -1,0 +1,18 @@
+<div class="table-responsive">
+  <table class="table">
+    <thead><tr><th scope="col">Номер</th><th scope="col">Сотрудник</th><th scope="col">Курс</th><th scope="col">Дата назначения</th><th scope="col">Статус</th></tr></thead>
+    <tbody>
+      {% for item in trainings %}
+        <tr>
+          <td><a href="{% url 'trainings:training_detail' item.id %}">№{{ item.id }}</a></td>
+          <td><a href="{% url 'employees:employee_detail' item.user.id %}">{{ item.user.name }}</a></td>
+          <td><a href="{% url 'courses:course_detail' item.course.id %}">{{ item.course.name }}</a></td>
+          <td>{{ item.enrollment_date }}</td>
+          <td>{% include 'trainings/includes/status.html' with training=item only %}</td>
+        </tr>
+      {% empty %}
+        <tr><td colspan="5">Обучение пока не назначено.</td></tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</div>

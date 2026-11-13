@@ -1,0 +1,20 @@
+{% extends 'base.html' %}
+{% block content %}
+  <p class="eyebrow">Обучение сотрудников</p>
+  <h1>Система учета корпоративного обучения</h1>
+  <p class="lead">Курсы, сотрудники и результаты обучения в одном месте.</p>
+  <div class="metrics" aria-label="Данные компании">
+    <a class="card metric" href="{% url 'employees:employees' %}"><strong>{{ employees|length }}</strong>Сотрудников</a>
+    <a class="card metric" href="{% url 'courses:courses' %}"><strong>{{ courses|length }}</strong>Курсов</a>
+    <a class="card metric" href="{% url 'trainings:trainings' %}"><strong>{{ trainings|length }}</strong>Обучений</a>
+    <a class="card metric" href="{% url 'results:results' %}"><strong>{{ results|length }}</strong>Результатов</a>
+  </div>
+  <section class="card card-body">
+    <h2>Как устроен учет</h2>
+    <p>Сотруднику назначается курс на определенную дату. В карточке обучения отображается его статус, а после завершения можно просмотреть итоговую оценку и комментарий.</p>
+    <div>
+      <a class="btn btn-primary" href="{% url 'courses:available' %}">Найти доступные курсы</a>
+      {% if sql_enabled %}<a class="btn" href="{% url 'homepage:statistics' %}">Статистика обучения</a>{% endif %}
+    </div>
+  </section>
+{% endblock %}

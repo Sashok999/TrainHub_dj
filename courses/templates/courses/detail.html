@@ -1,0 +1,31 @@
+{% extends 'base.html' %}
+{% block content %}
+  <h1>{{ course.name }}</h1>
+  <div class="card card-body">
+    <p><strong>ID:</strong> {{ course.id }}</p>
+    <div class="description">{{ course.description|linebreaksbr }}</div>
+    <p><strong>Длительность:</strong> {{ course.duration_days }} дн.</p>
+    <p><strong>Формат:</strong> {{ course.course_type|capfirst }}</p>
+    <p><strong>Обязательный:</strong> {{ course.is_mandatory|yesno:"Да,Нет" }}</p>
+  </div>
+  <h2>Доступность назначения на {{ today|date:"Y-m-d" }}</h2>
+  <p>Проверяется повторное назначение того же курса сотруднику на эту дату.</p>
+  <div class="table-responsive">
+    <table class="table">
+      <thead><tr><th scope="col">Сотрудник</th><th scope="col">Доступность</th></tr></thead>
+      <tbody>
+        {% for item in availability %}
+          <tr>
+            <td><a href="{% url 'employees:employee_detail' item.employee.id %}">{{ item.employee.name }}</a></td>
+            <td>{% if item.available %}<span class="badge bg-success">Доступно для назначения</span>{% else %}<span class="badge bg-secondary">Уже назначено</span>{% endif %}</td>
+          </tr>
+        {% empty %}
+          <tr><td colspan="2">Нет сотрудников.</td></tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+  <h2>Назначения курса</h2>
+  {% include 'trainings/includes/table.html' with trainings=trainings only %}
+  <a class="btn" href="{% url 'courses:courses' %}">К курсам</a>
+{% endblock %}

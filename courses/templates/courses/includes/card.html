@@ -1,0 +1,10 @@
+<article class="card card-body course-card">
+  <p class="eyebrow">{{ course.course_type|capfirst }} · {{ course.duration_days }} дн.</p>
+  <h2><a href="{% url 'courses:course_detail' course.id %}">{{ course.name }}</a></h2>
+  <p>{{ course.description|truncatechars:140|default:"Описание пока не добавлено." }}</p>
+  {% if course.is_mandatory %}
+    <span class="badge bg-primary">Обязательный курс</span>
+  {% else %}
+    <span class="badge bg-secondary">По выбору</span>
+  {% endif %}
+</article>

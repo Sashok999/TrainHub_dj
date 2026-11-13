@@ -1,0 +1,23 @@
+[
+  {
+    "id": 1,
+    "name": "Иван Иванов",
+    "email": "ivanov@company.ru",
+    "position": "Инженер-программист",
+    "role": "сотрудник"
+  },
+  {
+    "id": 2,
+    "name": "Петр Петров",
+    "email": "petrov@company.ru",
+    "position": "Менеджер проектов",
+    "role": "сотрудник"
+  },
+  {
+    "id": 3,
+    "name": "Анна Сидорова",
+    "email": "sidorova@company.ru",
+    "position": "HR-специалист",
+    "role": "админ"
+  }
+]
